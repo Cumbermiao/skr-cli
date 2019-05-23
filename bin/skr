@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+const program = require("commander");
+const path = require("path");
+
+const resolve = command =>path.resolve(__dirname,"../src/commands",command);
+
+program
+    .version(require('../package.json'),'-v,--version')
