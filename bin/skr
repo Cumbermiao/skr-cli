@@ -2,8 +2,55 @@
 
 const program = require("commander");
 const path = require("path");
+const fs = require('fs');
+const { prompt } = require('inquirer');
+const {addAction} = require('../src/actions');
 
-const resolve = command =>path.resolve(__dirname,"../src/commands",command);
+process.env.NODE_PATH = __dirname + '/../node_modules/'
+const TMP_PATH = `${__dirname}/../tpl.json`;
+
+
+const tempList = require(TMP_PATH).tempList;
+const resolve = command => path.resolve(__dirname, "../src/commands", command);
 
 program
-    .version(require('../package.json'),'-v,--version')
+    .version(require('../package.json'), '-v,--version')
+    .option('ls', 'show template list')
+    .option('-m', 'test -m')
+
+// program
+//     .usage('<command>')
+
+program.on("-m", function () {
+    console.log('-v show version');
+    console.log('add [template] add tempalet');
+    console.log('remove [template] remove tempalet');
+    console.log('init [template] generate project with [template]');
+})
+
+
+
+
+program.command("init <template> [project]")
+    .description("genrate new project with [template]")
+    .action(arg => {
+        console.log('init--------')
+        console.log(arg)
+    });
+
+program.command("add <template>")
+    .description("add new template")
+    .action(arg=>{
+        if(!arg){
+            console.log('template required!')
+        }
+        addAction(arg)
+    })
+
+
+
+program.parse(process.argv)
+
+if (!program.args.length) {
+    program.help()
+}
