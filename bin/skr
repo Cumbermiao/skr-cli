@@ -1,53 +1,53 @@
 #!/usr/bin/env node
 
 const program = require("commander");
-const path = require("path");
-const fs = require('fs');
-const { prompt } = require('inquirer');
-const {addAction} = require('../src/actions');
+const { addAction, deleteAction, lsAction, initAction, defaultAction } = require('../src/actions');
+
 
 process.env.NODE_PATH = __dirname + '/../node_modules/'
 const TMP_PATH = `${__dirname}/../tpl.json`;
 
 
-const tempList = require(TMP_PATH).tempList;
-const resolve = command => path.resolve(__dirname, "../src/commands", command);
 
 program
-    .version(require('../package.json'), '-v,--version')
-    .option('ls', 'show template list')
-    .option('-m', 'test -m')
+    .version(require('../package.json'), '-v,--version');
 
-// program
-//     .usage('<command>')
+program.command('ls')
+    .description("list all template")
+    .action(()=>{
+        lsAction();
+    })
 
-program.on("-m", function () {
-    console.log('-v show version');
-    console.log('add [template] add tempalet');
-    console.log('remove [template] remove tempalet');
-    console.log('init [template] generate project with [template]');
-})
-
-
-
-
-program.command("init <template> [project]")
+program.command("init [project] [template]")
     .description("genrate new project with [template]")
-    .action(arg => {
-        console.log('init--------')
-        console.log(arg)
+    .action((project,template) => {
+        initAction(project,template);
     });
 
 program.command("add <template>")
     .description("add new template")
-    .action(arg=>{
-        if(!arg){
-            console.log('template required!')
+    .action(arg => {
+        if (!arg) {
+            console.log('template required!');
         }
         addAction(arg)
+    });
+
+program.command("delete <template>")
+    .description("delete template")
+    .action(arg=>{
+        if(!arg){
+            console.log('template required!');
+            return
+        }
+        deleteAction(arg)
     })
 
-
+program.command("default [template]")
+    .description("set default template")
+    .action((template)=>{
+        defaultAction(template)
+    })
 
 program.parse(process.argv)
 

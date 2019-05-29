@@ -1,20 +1,21 @@
 {
   "name": "skr-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "init project with your sepcific github repository",
   "bin": {
-    "skr": "./bash/skr"
+    "skr": "./bin/skr"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "cumbermiao",
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.4.2",
     "cli-table3": "^0.5.1",
     "commander": "^2.20.0",
-    "inquirer": "^6.3.1"
+    "download-git-repo": "^2.0.0",
+    "inquirer": "^6.3.1",
+    "ora": "^3.4.0"
   }
 }
