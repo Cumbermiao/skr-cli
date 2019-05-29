@@ -10,7 +10,7 @@ const TMP_PATH = `${__dirname}/../tpl.json`;
 
 
 program
-    .version(require('../package.json'), '-v,--version');
+    .version(require('../package.json').version, '-v,--version');
 
 program.command('ls')
     .description("list all template")

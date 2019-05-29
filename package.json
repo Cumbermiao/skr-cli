@@ -1,6 +1,6 @@
 {
   "name": "skr-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "init project with your sepcific github repository",
   "bin": {
     "skr": "./bin/skr"
