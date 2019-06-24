@@ -5,14 +5,19 @@ const {tempList,TMP_PATH,showTable} = require('./module/common');
 
 var rules = [{
     type: 'input',
-    message: 'owner/repoName',
+    message: 'github account',
+    name: 'account',
+    validate: account => {
+        if(!account.length)return 'github account is required!';
+        return true
+    }
+},{
+    type: 'input',
     name: 'repo',
-    validate: url => {
-        const regx = /^\w+\/\w+$/;
-        if (regx.test(url)) {
-            return true
-        }
-        return 'owner is your github account ,repoName is your github respository name, eg:githubAccount/demo'
+    message: 'github repository',
+    validate: repo=>{
+        if(!repo.length)return `github repository is required!`;
+        return true
     }
 }, {
     type: "input",
@@ -26,10 +31,10 @@ module.exports = arg => {
         return
     }
 
-    prompt(rules).then(({ repo, branch }) => {
+    prompt(rules).then(({ account,repo,branch }) => {
         try {
             tempList[arg] = {
-                repo,
+                repo:`${account}/${repo}`,
                 branch:branch||'master'
             };
             fs.writeFileSync(TMP_PATH, JSON.stringify(tempList ));
